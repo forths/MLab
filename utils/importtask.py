@@ -18,15 +18,14 @@ def createtask(src, dest="/", host=None, port=5212, admin="admin@cloudreve.org",
     # 目标url
     url = "http://{}:{}/api/v3/user/session".format(host, port)
     # 管理员账户密码
-    payload = "{\"userName\":\"{}\",\"Password\":\"{}\",\"captchaCode\":\"\"}".format(
-        admin, passwd)
+    payload = {"userName":admin,"Password":passwd,"captchaCode":""}
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36',
         'Content-Type': 'application/json'
     }
 
     # 使用session发起请求
-    response = session.post(url, headers=headers, data=payload)
+    response = session.post(url, headers=headers, data=json.dumps(payload))
 
     if response.status_code == 200:
         url = "http:/{}:{}/api/v3/admin/task/import".format(host, port)
